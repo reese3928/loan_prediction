@@ -46,6 +46,8 @@ class LoanPrediction(object):
 
         # filter out missing values
         df_sub = df[self.column_filter_missing].dropna()
+        print('Raw data shape: ', df.shape)
+        print('After drop missing: ', df_sub.shape)
 
         # convert employment length into continuous feature
         df_sub[self.employment_length_col] = df_sub[self.employment_length_col].map({
@@ -93,10 +95,11 @@ class LoanPrediction(object):
 
         # Save the distribution of continuous features
         for col in self.continuous_features:
+            plt.figure(figsize=(10,6))
             plt.hist(self.processed_data[col])
             plt.xlabel(col)
             plt.title(f'Histogram of {col}')
-            plt.savefig(os.path.join(res_figure_path, f'hist_{col}.png'))
+            plt.savefig(os.path.join(res_figure_path, f'hist_{col}.png'), dpi=300)
             plt.close()
 
         # Save the distribution of discrete features
@@ -156,10 +159,12 @@ class LoanPrediction(object):
             "label": self.y_test
         })
 
+        plt.figure(figsize=(10,6))
         res_figure_path = os.path.join(self.res_path, 'figures')
         temp_df.boxplot(column='prediction_score', by='label')
+        plt.title(f'{model_name}')
         plt.ylabel('prediction_score')
-        plt.savefig(os.path.join(res_figure_path, f'prediction_score_{model_name}.png'))
+        plt.savefig(os.path.join(res_figure_path, f'prediction_score_{model_name}.png'), dpi=300)
         plt.close()
 
 
