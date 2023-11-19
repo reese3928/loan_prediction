@@ -1,0 +1,57 @@
+{
+    "data_path": "data",
+    "input_file_name": "loan_data.csv",
+    "res_path": "results",
+    
+    "column_filter_missing": ["id", "loan_amnt", "funded_amnt", "term", "int_rate", "installment",
+    "emp_length", "home_ownership", "annual_inc", "loan_status", "purpose",
+    "addr_state", "dti", "delinq_2yrs", "earliest_cr_line",
+    "open_acc", "revol_bal", "total_acc",
+    "out_prncp", "total_pymnt", "total_rec_prncp", "total_rec_int"
+    ],
+    "employment_length_col": "emp_length",
+    "home_ownership_col": "home_ownership",
+    "home_ownership_categories": ["MORTGAGE", "RENT", "OWN"],
+    "bad_loan_status": [
+        "Charged Off", 
+        "Late (31-120 days)",
+        "Late (16-30 days)", 
+        "Default"
+    ],
+    "loan_status_col": "loan_status",
+    "continuous_features": [
+        "loan_amnt",
+        "funded_amnt",
+        "int_rate",
+        "installment",
+        "emp_length",
+        "annual_inc",
+        "dti",
+        "delinq_2yrs",
+        "open_acc",
+        "revol_bal",
+        "total_acc",
+        "out_prncp",
+        "total_pymnt",
+        "total_rec_prncp",
+        "total_rec_int",
+        "earliest_cr_line_mths"
+    ],
+    "discrete_features": [
+        "term",
+        "home_ownership"
+    ],
+    "credit_history_column": "earliest_cr_line",
+    "xgb_grid_search_params": {
+        "colsample_bytree": [0.3, 0.7],
+        "learning_rate": [0.01, 0.1, 0.2],
+        "n_estimators": [100],
+        "subsample": [0.2, 0.5, 0.8],
+        "max_depth": [2, 3, 5]
+    },
+    "ridge_grid_search_params": {
+        "C":[0.001, 0.01, 0.1, 1, 10, 100, 1000]
+    }
+
+
+}
