@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, recall_score, f1_score
 import json
 import numpy as np
 
@@ -140,11 +140,12 @@ class LoanPrediction(object):
         precision = precision_score(self.y_test, self.predictions)
         recall = recall_score(self.y_test, self.predictions)
         f1score = f1_score(self.y_test, self.predictions)
+        auc_score = roc_auc_score(self.y_test, self.prediction_score[:,1])
 
         # save metrics into a table
         temp_df = pd.DataFrame({
-            "metrics": ['accuracy', 'precision', 'recall', 'f1score'],
-            "value": [accuracy, precision, recall, f1score]
+            "metrics": ['accuracy', 'precision', 'recall', 'f1score', 'auc'],
+            "value": [accuracy, precision, recall, f1score, auc_score]
         })
         res_table_path = os.path.join(self.res_path, 'tables')
         temp_df.to_csv(os.path.join(res_table_path, f'eval_metrics_{model_name}.csv'), index=False)
